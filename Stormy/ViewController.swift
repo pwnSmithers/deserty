@@ -20,7 +20,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("View has loaded!")
+        print("View has loaded")
+        print("print something else")
     }
 
 
