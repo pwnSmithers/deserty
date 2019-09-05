@@ -26,7 +26,6 @@ class DarkSkyApiClient {
         self.init(configuration: .default)
     }
     
-    let downloader = JsonDownloader()
     let decoder = JSONDecoder()
     
     typealias weatherCompletionHandler = (Weather?, Error?) -> Void

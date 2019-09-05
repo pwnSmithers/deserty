@@ -18,8 +18,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    fileprivate let privateKey = "a68b537824d2345180201e3902397d6a"
-    
     fileprivate let client = DarkSkyApiClient()
     
     override func viewDidLoad() {
@@ -49,10 +47,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func getCurrentWeather() {
-        
-        print("Current weather")
-        showInfo()
-        
+        showInfo()        
     }
     
     fileprivate func toggleRefreshAnimation(on: Bool){
