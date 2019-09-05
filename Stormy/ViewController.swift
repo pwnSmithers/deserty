@@ -20,31 +20,23 @@ class ViewController: UIViewController {
 
     fileprivate let privateKey = "a68b537824d2345180201e3902397d6a"
     
+    fileprivate let client = DarkSkyApiClient()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         showInfo()
+        activityIndicator.isHidden = true
     }
 
     fileprivate func showInfo(){
-       
-        let base = URL(string: "https://api.darksky.net/forecast/\(privateKey)/")
-        guard let forecastUrl = URL(string: "37.8267,-122.4233", relativeTo: base) else {
-            return
+        toggleRefreshAnimation(on: true)
+        client.getCurrentWeather(at: Cordinate.alcatrazIsland) { [unowned self] currentWeather, error in
+            if let currentWeather = currentWeather {
+                let viewModel = CurrentWeatherViewModel(model: currentWeather)
+                self.displayWeather(using: viewModel)
+                self.toggleRefreshAnimation(on: false)
+            }
         }
-        
-        let request = URLRequest(url: forecastUrl)
-        
-        let session = URLSession(configuration: .default)
-        
-        let dataTask = session.dataTask(with: request) { data, response, error  in
-            print(data)
-        }
-        
-        dataTask.resume()
-        
-        let currentWeatherInst = CurrentWeather(temperature: 85.0, humidity: 0.8, precipProbability: 0.1, summary: "Bloody Fucking Hot", icon: "clear-day")
-        let viewModel = CurrentWeatherViewModel(model: currentWeatherInst)
-        displayWeather(using: viewModel)
     }
     
     fileprivate func displayWeather(using viewModel: CurrentWeatherViewModel){
@@ -56,6 +48,21 @@ class ViewController: UIViewController {
         
     }
 
+    @IBAction func getCurrentWeather() {
+        
+        print("Current weather")
+        showInfo()
+        
+    }
+    
+    fileprivate func toggleRefreshAnimation(on: Bool){
+        refreshButton.isHidden = on
+        if on {
+            activityIndicator.startAnimating()
+        }else{
+            activityIndicator.stopAnimating()
+        }
+    }
 }
 
 

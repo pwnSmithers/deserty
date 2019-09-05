@@ -16,33 +16,58 @@ class DarkSkyApiClient {
     lazy var baseUrl: URL = {
         return URL(string: "https://api.darksky.net/forecast/\(privateKey)/")!
     }()
+    let session : URLSession
+    
+    init(configuration: URLSessionConfiguration) {
+        self.session = URLSession(configuration: configuration)
+    }
+    
+    convenience init() {
+        self.init(configuration: .default)
+    }
     
     let downloader = JsonDownloader()
+    let decoder = JSONDecoder()
     
-    typealias weatherCompletionHandler = (Weather?, DarkSkyError?) -> Void
-    typealias CurrentWeatherCompletionHandler = (CurrentWeather?, DarkSkyError?) -> Void
+    typealias weatherCompletionHandler = (Weather?, Error?) -> Void
+    typealias CurrentWeatherCompletionHandler = (CurrentWeather?, Error?) -> Void
     
     private func getWeather(at coordinate: Cordinate, completionHandler: @escaping weatherCompletionHandler){
         
         guard let url = URL(string: coordinate.description, relativeTo: baseUrl) else{
-            completionHandler(nil, .invalidURL)
+            completionHandler(nil, DarkSkyError.invalidURL)
             return
         }
         
         let request = URLRequest(url: url)
         
-        let task = downloader.jsonTask(with: request) { json, error  in
-            guard let json = json else {
-                completionHandler(nil, error)
-                return
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            DispatchQueue.main.async {
+                if let data = data {
+                    guard let httpResponse = response as? HTTPURLResponse else {
+                        completionHandler(nil, DarkSkyError.requestFailed)
+                        return
+                    }
+                    
+                    if httpResponse.statusCode == 200 {
+                        do{
+                            let weather = try self.decoder.decode(Weather.self, from: data)
+                            completionHandler(weather, nil)
+                        }catch let error {
+                            completionHandler(nil, error)
+                        }
+                    }else{
+                        completionHandler(nil, DarkSkyError.invalidData)
+                    }
+                    
+                } else if let error = error {
+                    completionHandler(nil, error)
+                }
             }
-            
-            guard let weather = Weather(json: json) else {
-                completionHandler(nil, .jsonParsingFailure)
-                return
-            }
-            completionHandler(weather, nil)
         }
+        
+        
         task.resume()
     }
     
