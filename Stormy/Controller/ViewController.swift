@@ -24,6 +24,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         showInfo()
         activityIndicator.isHidden = true
+
     }
 
     fileprivate func showInfo(){
@@ -47,9 +48,13 @@ class ViewController: UIViewController {
     }
 
     @IBAction func getCurrentWeather() {
-        showInfo()        
+        showInfo()
     }
     
+    @IBAction func searchButtonPressed(_ sender: Any) {
+        print("Search button pressed.")
+    }
+
     fileprivate func toggleRefreshAnimation(on: Bool){
         refreshButton.isHidden = on
         if on {

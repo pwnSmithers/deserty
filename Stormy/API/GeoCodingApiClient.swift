@@ -1,24 +1,20 @@
 //
-//  DarkSkyApiClient.swift
+//  GeoCodingApiClient.swift
 //  Stormy
 //
-//  Created by Smithers on 03/09/2019.
+//  Created by Smithers on 06/09/2019.
 //  Copyright © 2019 Treehouse. All rights reserved.
 //
 
 import Foundation
 
 
-class DarkSkyApiClient {
+class GeoCodingApiClient {
     
-    fileprivate let privateKey = "a68b537824d2345180201e3902397d6a"
-    
-    lazy var baseUrl: URL = {
-        return URL(string: "https://api.darksky.net/forecast/\(privateKey)/")!
+    lazy var geoCodeUrl: URL = {
+        return URL(string: "https://maps.googleapis.com/maps/api/geocode/json?")!
     }()
-    
-
-    
+    let locationDummyHolder = "Najjera"
     let session : URLSession
     
     init(configuration: URLSessionConfiguration) {
@@ -34,9 +30,11 @@ class DarkSkyApiClient {
     typealias weatherCompletionHandler = (Weather?, Error?) -> Void
     typealias CurrentWeatherCompletionHandler = (CurrentWeather?, Error?) -> Void
     
-    private func getWeather(at coordinate: Cordinate, completionHandler: @escaping weatherCompletionHandler){
+    typealias cordinatesCompletionHandler = (Results?, Error?) -> Void
+    
+    private func getCordinates(at place: Place, completionHandler: @escaping cordinatesCompletionHandler){
         
-        guard let url = URL(string: coordinate.description, relativeTo: baseUrl) else{
+        guard let url = URL(string: locationDummyHolder, relativeTo: geoCodeUrl) else{
             completionHandler(nil, DarkSkyError.invalidURL)
             return
         }
@@ -54,8 +52,8 @@ class DarkSkyApiClient {
                     
                     if httpResponse.statusCode == 200 {
                         do{
-                            let weather = try self.decoder.decode(Weather.self, from: data)
-                            completionHandler(weather, nil)
+                            let results = try self.decoder.decode(Results.self, from: data)
+                            completionHandler(results, nil)
                         }catch let error {
                             completionHandler(nil, error)
                         }
@@ -72,13 +70,4 @@ class DarkSkyApiClient {
         
         task.resume()
     }
-    
-    func getCurrentWeather(at coordinate: Cordinate, completionHandler completion: @escaping CurrentWeatherCompletionHandler){
-        getWeather(at: coordinate) { weather, error in
-            
-            completion(weather?.currently, error)
-        }
-    }
-    
 }
-
