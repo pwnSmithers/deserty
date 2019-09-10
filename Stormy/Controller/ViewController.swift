@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Moya
 class ViewController: UIViewController {
     
     @IBOutlet weak var currentTemperatureLabel: UILabel!
@@ -18,22 +18,31 @@ class ViewController: UIViewController {
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
-    fileprivate let client = DarkSkyApiClient()
+    let networkingProvider = MoyaProvider<NetworkingService>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        showInfo()
         activityIndicator.isHidden = true
-
+        testMoya()
     }
-
-    fileprivate func showInfo(){
-        toggleRefreshAnimation(on: true)
-        client.getCurrentWeather(at: Cordinate.alcatrazIsland) { [unowned self] currentWeather, error in
-            if let currentWeather = currentWeather {
-                let viewModel = CurrentWeatherViewModel(model: currentWeather)
-                self.displayWeather(using: viewModel)
-                self.toggleRefreshAnimation(on: false)
+    
+    fileprivate func testMoya(){
+        networkingProvider.request(.CurrentWeather(coordinate: Cordinate.alcatrazIsland)) { (result) in
+            switch result {
+            case .success(let response):
+                do{
+                    let currentWeather = try JSONDecoder().decode(Weather.self, from: response.data)
+                        let viewModel = CurrentWeatherViewModel(model: currentWeather.currently)
+                    DispatchQueue.main.async {
+                        self.displayWeather(using: viewModel)
+                        self.toggleRefreshAnimation(on: false)
+                    }
+                    print(currentWeather.currently)
+                }catch let error {
+                   print(error)
+                }
+            case .failure(let error):
+                print(error)
             }
         }
     }
@@ -48,7 +57,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func getCurrentWeather() {
-        showInfo()
+        testMoya()
     }
     
     @IBAction func searchButtonPressed(_ sender: Any) {

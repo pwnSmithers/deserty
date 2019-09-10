@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34B7FF75054EEF67E604E1BF /* Pods_Stormy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA63411366A07B8EB27485A1 /* Pods_Stormy.framework */; };
 		9601DB402316AB300052536D /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9601DB3F2316AB300052536D /* CurrentWeather.swift */; };
 		960BD088231FB581008FE3F7 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960BD087231FB581008FE3F7 /* Weather.swift */; };
+		962E307F2327B9D00017DB0C /* NetworkingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 962E307E2327B9D00017DB0C /* NetworkingService.swift */; };
 		96611E4E231D59BD00BC4914 /* DarkSkyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96611E4D231D59BD00BC4914 /* DarkSkyError.swift */; };
 		967C8828231E822700A334E8 /* DarkSkyApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967C8827231E822700A334E8 /* DarkSkyApiClient.swift */; };
 		967C882A231E863A00A334E8 /* Cordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967C8829231E863A00A334E8 /* Cordinate.swift */; };
@@ -28,6 +30,7 @@
 /* Begin PBXFileReference section */
 		9601DB3F2316AB300052536D /* CurrentWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
 		960BD087231FB581008FE3F7 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		962E307E2327B9D00017DB0C /* NetworkingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingService.swift; sourceTree = "<group>"; };
 		96611E4D231D59BD00BC4914 /* DarkSkyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyError.swift; sourceTree = "<group>"; };
 		967C8827231E822700A334E8 /* DarkSkyApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkSkyApiClient.swift; sourceTree = "<group>"; };
 		967C8829231E863A00A334E8 /* Cordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cordinate.swift; sourceTree = "<group>"; };
@@ -44,6 +47,9 @@
 		972470B520A27F0100050DF7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		972470B820A27F0100050DF7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		972470BA20A27F0100050DF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CF900A1CE28D22F29E816962 /* Pods-Stormy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stormy.release.xcconfig"; path = "Target Support Files/Pods-Stormy/Pods-Stormy.release.xcconfig"; sourceTree = "<group>"; };
+		DA63411366A07B8EB27485A1 /* Pods_Stormy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stormy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F5CF389AEFFA9F85E06EAC04 /* Pods-Stormy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stormy.debug.xcconfig"; path = "Target Support Files/Pods-Stormy/Pods-Stormy.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,12 +57,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34B7FF75054EEF67E604E1BF /* Pods_Stormy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		210DFC42822019898DD1DA79 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F5CF389AEFFA9F85E06EAC04 /* Pods-Stormy.debug.xcconfig */,
+				CF900A1CE28D22F29E816962 /* Pods-Stormy.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		64FC6770898AFBD52C824DFC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DA63411366A07B8EB27485A1 /* Pods_Stormy.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		960BD08B23212DBC008FE3F7 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +124,7 @@
 				96611E4D231D59BD00BC4914 /* DarkSkyError.swift */,
 				967C8827231E822700A334E8 /* DarkSkyApiClient.swift */,
 				968AB481232264DB00C93CA1 /* GeoCodingApiClient.swift */,
+				962E307E2327B9D00017DB0C /* NetworkingService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -126,6 +151,8 @@
 			children = (
 				972470AD20A27F0000050DF7 /* Stormy */,
 				972470AC20A27F0000050DF7 /* Products */,
+				210DFC42822019898DD1DA79 /* Pods */,
+				64FC6770898AFBD52C824DFC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -160,9 +187,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 972470BD20A27F0100050DF7 /* Build configuration list for PBXNativeTarget "Stormy" */;
 			buildPhases = (
+				BFFFBE18CB3D5AA97002ADC1 /* [CP] Check Pods Manifest.lock */,
 				972470A720A27F0000050DF7 /* Sources */,
 				972470A820A27F0000050DF7 /* Frameworks */,
 				972470A920A27F0000050DF7 /* Resources */,
+				3772328ACC3FB2466FE374CF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -219,6 +248,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3772328ACC3FB2466FE374CF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Stormy/Pods-Stormy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Stormy/Pods-Stormy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Stormy/Pods-Stormy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BFFFBE18CB3D5AA97002ADC1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Stormy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		972470A720A27F0000050DF7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -229,6 +300,7 @@
 				9601DB402316AB300052536D /* CurrentWeather.swift in Sources */,
 				968AB48423227C6200C93CA1 /* Place.swift in Sources */,
 				96611E4E231D59BD00BC4914 /* DarkSkyError.swift in Sources */,
+				962E307F2327B9D00017DB0C /* NetworkingService.swift in Sources */,
 				968AB47D232252E700C93CA1 /* SearchViewController.swift in Sources */,
 				967C882A231E863A00A334E8 /* Cordinate.swift in Sources */,
 				968AB4802322606700C93CA1 /* Constants.swift in Sources */,
@@ -378,6 +450,7 @@
 		};
 		972470BE20A27F0100050DF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5CF389AEFFA9F85E06EAC04 /* Pods-Stormy.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -396,6 +469,7 @@
 		};
 		972470BF20A27F0100050DF7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CF900A1CE28D22F29E816962 /* Pods-Stormy.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
