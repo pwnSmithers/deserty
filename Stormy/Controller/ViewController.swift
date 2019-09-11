@@ -23,10 +23,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         activityIndicator.isHidden = true
-        testMoya()
+        getWeather()
     }
     
-    fileprivate func testMoya(){
+    fileprivate func getWeather(){
         networkingProvider.request(.CurrentWeather(coordinate: Cordinate.alcatrazIsland)) { (result) in
             switch result {
             case .success(let response):
@@ -57,7 +57,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func getCurrentWeather() {
-        testMoya()
+        getWeather()
     }
     
     @IBAction func searchButtonPressed(_ sender: Any) {

@@ -12,6 +12,20 @@ import UIKit
 class SearchViewController: UIViewController {
     @IBOutlet weak var searchResultsTableView: UITableView!
     
+    @IBAction func suggestionOneButton(_ sender: Any) {
+        print("one")
+    }
+    
+    @IBAction func suggestionTwoButton(_ sender: Any) {
+        print("Two")
+    }
+    
+    @IBAction func suggestionThreeButton(_ sender: Any) {
+        print("Three")
+    }
+    
+    
+    
     @IBAction func DoneButtonPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
