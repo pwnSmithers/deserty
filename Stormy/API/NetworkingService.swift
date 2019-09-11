@@ -17,8 +17,8 @@ enum NetworkingService {
 extension NetworkingService : TargetType {
     var baseURL: URL {
         switch self {
-        case .Geocoding:
-              return URL(string: "https://maps.googleapis.com/maps/api/geocode/json?")!
+        case .Geocoding(let place):
+              return URL(string: "https://maps.googleapis.com/maps/api/geocode/json?address=\(place)&key=\(GlobalConstants.googleGeoCodingApiKey)")!
         case .CurrentWeather:
               return URL(string: "https://api.darksky.net/forecast/\(GlobalConstants.privateKey)/")!
         }
@@ -26,8 +26,8 @@ extension NetworkingService : TargetType {
     
     var path: String {
         switch self {
-        case .Geocoding(let place):
-            return "address=\(place)&key=\(GlobalConstants.googleGeoCodingApiKey)"
+        case .Geocoding:
+            return ""
         case .CurrentWeather(let coordinate):
             return coordinate.description
         }
@@ -54,5 +54,12 @@ extension NetworkingService : TargetType {
         return ["content-type":"application/json"]
     }
     
+
     
+}
+
+class CompleteUrlLoggerPlugin : PluginType {
+    func willSend(_ request: RequestType, target: TargetType) {
+        print(request.request?.url?.absoluteString ?? "Something is wrong")
+    }
 }

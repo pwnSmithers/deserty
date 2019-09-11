@@ -17,6 +17,7 @@ class SearchViewController: UIViewController {
     
     let placeArray = ["Najjera", "Damacia", "kigalia", "Kyebando", "kyengera"]
     let networkingProvider = MoyaProvider<NetworkingService>()
+    let provider = MoyaProvider<NetworkingService>(plugins: [CompleteUrlLoggerPlugin()])
     
     @IBAction func suggestionOneButton(_ sender: Any) {
         print("one")
@@ -43,8 +44,9 @@ class SearchViewController: UIViewController {
             switch result {
             case .success(let response):
                 do{
+                    print(response.data)
                     let coordinates = try JSONDecoder().decode(Results.self, from: response.data)
-                    
+                   
                     print(coordinates)
                 }catch let error {
                     print(error)
