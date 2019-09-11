@@ -10,14 +10,18 @@ import Foundation
 
 
 struct Results : Codable {
-    let result : Geometry
+    let results : [Geometry]
 }
 
 struct Geometry: Codable {
-    let location : Location
+    let geometry : Location
 }
 
 struct Location: Codable {
-    let lat : Double
-    let lng : Double
+    let location : cordinates
+}
+
+struct cordinates: Codable {
+    let lat: Double
+    let lng: Double
 }
