@@ -27,7 +27,7 @@ extension NetworkingService : TargetType {
     var path: String {
         switch self {
         case .Geocoding(let place):
-            return "\(place)&key=\(GlobalConstants.googleGeoCodingApiKey)"
+            return "address=\(place)&key=\(GlobalConstants.googleGeoCodingApiKey)"
         case .CurrentWeather(let coordinate):
             return coordinate.description
         }

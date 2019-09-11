@@ -37,7 +37,6 @@ class ViewController: UIViewController {
                         self.displayWeather(using: viewModel)
                         self.toggleRefreshAnimation(on: false)
                     }
-                    print(currentWeather.currently)
                 }catch let error {
                    print(error)
                 }

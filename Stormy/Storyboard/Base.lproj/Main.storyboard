@@ -186,6 +186,9 @@
                                 <color key="tintColor" red="0.35952225329999998" green="0.55676841740000005" blue="0.86278301479999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="barTintColor" red="0.35952225329999998" green="0.55676841740000005" blue="0.86278301479999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="ey6-tc-XRf" id="oAW-OM-The"/>
+                                </connections>
                             </searchBar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter a location in order to see it's current weather." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dis-wm-0W8">
                                 <rect key="frame" x="16" y="194" width="343" height="44"/>
@@ -230,6 +233,29 @@
                                 <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" red="0.35952225329999998" green="0.55676841740000005" blue="0.86278301479999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="sectionIndexTrackingBackgroundColor" red="0.35952225329999998" green="0.55676841740000005" blue="0.86278301479999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="cell" textLabel="mhA-hw-RIJ" style="IBUITableViewCellStyleDefault" id="4oL-8T-mc2">
+                                        <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4oL-8T-mc2" id="rOy-tR-uwf">
+                                            <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mhA-hw-RIJ">
+                                                    <rect key="frame" x="15" y="0.0" width="313" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ey6-tc-XRf" id="kOw-dH-RHX"/>
+                                    <outlet property="delegate" destination="ey6-tc-XRf" id="3FJ-jH-dVQ"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.3595222532749176" green="0.55676841735839844" blue="0.86278301477432251" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -257,13 +283,9 @@
                             <constraint firstItem="vCs-8T-PcB" firstAttribute="top" secondItem="sj1-Aa-SdX" secondAttribute="bottom" constant="20" id="uMI-Wo-MIQ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vIq-uq-wT8"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="Zlj-uE-3q1"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
+                        <outlet property="searchBar" destination="mK1-Kp-jJK" id="8TX-bl-pN9"/>
                         <outlet property="searchDisplayController" destination="bRO-sw-3oo" id="gY0-Zw-bv1"/>
                         <outlet property="searchResultsTableView" destination="Zlj-uE-3q1" id="R6K-dJ-HLp"/>
                     </connections>
