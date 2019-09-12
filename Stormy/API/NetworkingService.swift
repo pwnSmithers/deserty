@@ -18,7 +18,9 @@ extension NetworkingService : TargetType {
     var baseURL: URL {
         switch self {
         case .Geocoding(let place):
-              return URL(string: "https://maps.googleapis.com/maps/api/geocode/json?address=\(place)&key=\(GlobalConstants.googleGeoCodingApiKey)")!
+            let url =  "https://maps.googleapis.com/maps/api/geocode/json?address=\(place)&key=\(GlobalConstants.googleGeoCodingApiKey)"
+            let finalURL = url.replacingOccurrences(of: " ", with: "+")
+            return URL(string: finalURL)!
         case .CurrentWeather:
               return URL(string: "https://api.darksky.net/forecast/\(GlobalConstants.privateKey)/")!
         }

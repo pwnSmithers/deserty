@@ -14,6 +14,7 @@ struct Results : Codable {
 }
 
 struct Geometry: Codable {
+    let formatted_address : String
     let geometry : Location
 }
 

@@ -15,27 +15,31 @@ class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     
+    var latitude : Double?
+    var logitude : Double?
+    
     let placeArray = ["Najjera", "Damacia", "kigalia", "Kyebando", "kyengera"]
     let networkingProvider = MoyaProvider<NetworkingService>()
-    let provider = MoyaProvider<NetworkingService>(plugins: [CompleteUrlLoggerPlugin()])
+    
+    var sexyResults = [Results]()
     
     @IBAction func suggestionOneButton(_ sender: Any) {
-        print("one")
+        getGeocoding(of: "Najjera")
     }
     
     @IBAction func suggestionTwoButton(_ sender: Any) {
-        print("Two")
+        getGeocoding(of: "Kisaasi")
     }
     
     @IBAction func suggestionThreeButton(_ sender: Any) {
-        print("Three")
+        getGeocoding(of: "Makerere")
     }
     
     @IBAction func DoneButtonPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     override func viewDidLoad() {
-        
+        searchResultsTableView.isHidden = true
     }
     
     fileprivate func getGeocoding(of place: String){
@@ -46,8 +50,11 @@ class SearchViewController: UIViewController {
                 do{
                     print(response.data)
                     let coordinates = try JSONDecoder().decode(Results.self, from: response.data)
-                   
-                    print(coordinates)
+                    DispatchQueue.main.async {
+                         self.sexyResults.append(coordinates)
+                         self.searchResultsTableView.reloadData()
+                         self.searchResultsTableView.isHidden = false
+                    }
                 }catch let error {
                     print(error)
                 }
@@ -57,20 +64,38 @@ class SearchViewController: UIViewController {
         }
         
     }
-    
-    
 }
 
 
 extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return placeArray.count
+        return sexyResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        cell?.textLabel?.text = placeArray[indexPath.row]
+        cell?.textLabel?.textColor = UIColor.white
+        if sexyResults.isEmpty {
+            cell?.textLabel?.text = "We couldn't find the place you're searching for."
+        }else{
+            sexyResults.forEach { place in
+                place.results.forEach({ x in
+                    cell?.textLabel?.text = x.formatted_address
+                })
+            }
+        }
+    
         return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let place = sexyResults[indexPath.row].results
+        place.forEach { x in
+            let geometry = x.geometry.location
+            latitude = geometry.lat
+            logitude = geometry.lng
+        }
     }
     
 }
