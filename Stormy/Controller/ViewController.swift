@@ -8,6 +8,9 @@
 
 import UIKit
 import Moya
+
+
+
 class ViewController: UIViewController {
     
     @IBOutlet weak var currentTemperatureLabel: UILabel!
@@ -23,11 +26,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         activityIndicator.isHidden = true
-        getWeather()
+        getWeather(coords: Cordinate.alcatrazIsland)
     }
     
-    fileprivate func getWeather(){
-        networkingProvider.request(.CurrentWeather(coordinate: Cordinate.alcatrazIsland)) { (result) in
+    fileprivate func getWeather(coords: Cordinate){
+        print("Get the weather")
+        networkingProvider.request(.CurrentWeather(coordinate: coords)) { (result) in
             switch result {
             case .success(let response):
                 do{
@@ -47,6 +51,7 @@ class ViewController: UIViewController {
     }
     
     fileprivate func displayWeather(using viewModel: CurrentWeatherViewModel){
+        print("display weather")
         currentTemperatureLabel.text = viewModel.temperature
         currentHumidityLabel.text = viewModel.humidity
         currentPrecipitationLabel.text = viewModel.precipitationProbability
@@ -56,10 +61,11 @@ class ViewController: UIViewController {
     }
 
     @IBAction func getCurrentWeather() {
-        getWeather()
+        getWeather(coords: Cordinate.alcatrazIsland)
     }
     
     @IBAction func searchButtonPressed(_ sender: Any) {
+        
         print("Search button pressed.")
     }
 
@@ -71,9 +77,22 @@ class ViewController: UIViewController {
             activityIndicator.stopAnimating()
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SearchPressed"{
+            let searchVC = segue.destination as! SearchViewController
+            searchVC.placeSelectionDelegate = self
+        }
+    }
 }
 
-
+extension ViewController: PlaceSelectionDelegate{
+    func placeSelected(with lat: Double, with lng: Double) {
+        let cords = Cordinate.init(latitude: lat, longitude: lng)
+        print("Triggered")
+        getWeather(coords: cords)
+    }
+}
 
 
 

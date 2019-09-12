@@ -10,14 +10,17 @@ import Foundation
 import UIKit
 import Moya
 
+protocol PlaceSelectionDelegate {
+    func placeSelected(with lat: Double, with lng: Double)
+}
+
 class SearchViewController: UIViewController {
     @IBOutlet weak var searchResultsTableView: UITableView!
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var latitude : Double?
-    var logitude : Double?
-    
+    var placeSelectionDelegate : PlaceSelectionDelegate!
+
     let placeArray = ["Najjera", "Damacia", "kigalia", "Kyebando", "kyengera"]
     let networkingProvider = MoyaProvider<NetworkingService>()
     
@@ -93,9 +96,10 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
         let place = sexyResults[indexPath.row].results
         place.forEach { x in
             let geometry = x.geometry.location
-            latitude = geometry.lat
-            logitude = geometry.lng
+            print(geometry)
+            placeSelectionDelegate.placeSelected(with: geometry.lat, with: geometry.lng)
         }
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
