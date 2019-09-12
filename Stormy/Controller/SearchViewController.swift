@@ -11,7 +11,7 @@ import UIKit
 import Moya
 
 protocol PlaceSelectionDelegate {
-    func placeSelected(with lat: Double, with lng: Double)
+    func placeSelected(with lat: Double, with lng: Double, with place: String)
 }
 
 class SearchViewController: UIViewController {
@@ -97,7 +97,7 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
         place.forEach { x in
             let geometry = x.geometry.location
             print(geometry)
-            placeSelectionDelegate.placeSelected(with: geometry.lat, with: geometry.lng)
+            placeSelectionDelegate.placeSelected(with: geometry.lat, with: geometry.lng, with: x.formatted_address)
         }
         self.dismiss(animated: true, completion: nil)
     }

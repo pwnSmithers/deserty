@@ -20,7 +20,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var currentSummaryLabel: UILabel!
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-
+  
+    @IBOutlet weak var locationLabel: UILabel!
+    
     let networkingProvider = MoyaProvider<NetworkingService>()
     
     override func viewDidLoad() {
@@ -37,6 +39,7 @@ class ViewController: UIViewController {
                 do{
                     let currentWeather = try JSONDecoder().decode(Weather.self, from: response.data)
                         let viewModel = CurrentWeatherViewModel(model: currentWeather.currently)
+                    print(viewModel)
                     DispatchQueue.main.async {
                         self.displayWeather(using: viewModel)
                         self.toggleRefreshAnimation(on: false)
@@ -57,6 +60,7 @@ class ViewController: UIViewController {
         currentPrecipitationLabel.text = viewModel.precipitationProbability
         currentWeatherIcon.image = viewModel.icon
         currentSummaryLabel.text = viewModel.summary
+        
         
     }
 
@@ -87,9 +91,9 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: PlaceSelectionDelegate{
-    func placeSelected(with lat: Double, with lng: Double) {
+    func placeSelected(with lat: Double, with lng: Double, with place: String) {
         let cords = Cordinate.init(latitude: lat, longitude: lng)
-        print("Triggered")
+        locationLabel.text = place
         getWeather(coords: cords)
     }
 }
