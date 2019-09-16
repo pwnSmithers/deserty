@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var currentSummaryLabel: UILabel!
     @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
   
     @IBOutlet weak var locationLabel: UILabel!
     
@@ -75,7 +76,7 @@ class ViewController: UIViewController {
 
     fileprivate func toggleRefreshAnimation(on: Bool){
         refreshButton.isHidden = on
-        if on {
+        if (on == true) {
             activityIndicator.startAnimating()
         }else{
             activityIndicator.stopAnimating()

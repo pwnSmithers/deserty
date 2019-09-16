@@ -96,7 +96,6 @@ extension SearchViewController : UITableViewDelegate, UITableViewDataSource {
         let place = sexyResults[indexPath.row].results
         place.forEach { x in
             let geometry = x.geometry.location
-            print(geometry)
             placeSelectionDelegate.placeSelected(with: geometry.lat, with: geometry.lng, with: x.formatted_address)
         }
         self.dismiss(animated: true, completion: nil)
@@ -108,7 +107,6 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else {return}
-        print(searchText)
         getGeocoding(of: searchText)
     }
     
