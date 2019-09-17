@@ -8,10 +8,11 @@
 
 import UIKit
 import Moya
+import CoreLocation
 
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate{
     
     @IBOutlet weak var currentTemperatureLabel: UILabel!
     @IBOutlet weak var currentHumidityLabel: UILabel!
@@ -24,16 +25,35 @@ class ViewController: UIViewController {
   
     @IBOutlet weak var locationLabel: UILabel!
     
+    
     let networkingProvider = MoyaProvider<NetworkingService>()
+    let manager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        manager.delegate = self
+        manager.requestAlwaysAuthorization()
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.startUpdatingLocation()
+        manager.requestLocation()
+        print(manager.location?.coordinate)
+        
+//        print(manager.location?.coordinate.latitude)
+//
+//        guard let currLat = manager.location?.coordinate.latitude else {
+//            print("Can't convert")
+//            return
+//        }
+//        print(currLat)
+       
         activityIndicator.isHidden = true
+//
+//        getWeather(coords: Cordinate(latitude: manager.location?.coordinate.latitude, longitude: manager.location?.coordinate.longitude))
+        
         getWeather(coords: Cordinate.alcatrazIsland)
     }
     
     fileprivate func getWeather(coords: Cordinate){
-        print("Get the weather")
         networkingProvider.request(.CurrentWeather(coordinate: coords)) { (result) in
             switch result {
             case .success(let response):
@@ -55,14 +75,11 @@ class ViewController: UIViewController {
     }
     
     fileprivate func displayWeather(using viewModel: CurrentWeatherViewModel){
-        print("display weather")
         currentTemperatureLabel.text = viewModel.temperature
         currentHumidityLabel.text = viewModel.humidity
         currentPrecipitationLabel.text = viewModel.precipitationProbability
         currentWeatherIcon.image = viewModel.icon
         currentSummaryLabel.text = viewModel.summary
-        
-        
     }
 
     @IBAction func getCurrentWeather() {
@@ -70,8 +87,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func searchButtonPressed(_ sender: Any) {
-        
-        print("Search button pressed.")
+      
     }
 
     fileprivate func toggleRefreshAnimation(on: Bool){
@@ -81,6 +97,16 @@ class ViewController: UIViewController {
         }else{
             activityIndicator.stopAnimating()
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("the current location is \(locations)")
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("The device failed to get the user's location \(error.localizedDescription)")
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -98,7 +124,6 @@ extension ViewController: PlaceSelectionDelegate{
         getWeather(coords: cords)
     }
 }
-
 
 
 

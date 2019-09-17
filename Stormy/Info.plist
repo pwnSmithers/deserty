@@ -41,5 +41,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need you hand over some of basic location rights, we will only track it when using the stormy</string>
+	<key>NSLocationUsageDescription</key>
+	<string>We need access to your location for better weather forecast</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Please grant us access to your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Stormy requires access to your location for accurate weather results</string>
 </dict>
 </plist>
