@@ -11,6 +11,7 @@ import Moya
 
 enum NetworkingService {
     case Geocoding(place: String)
+    case ReverseGeocoding(lat: Double, lng: Double)
     case CurrentWeather(coordinate: Cordinate)
 }
 
@@ -23,6 +24,10 @@ extension NetworkingService : TargetType {
             return URL(string: finalURL)!
         case .CurrentWeather:
               return URL(string: "https://api.darksky.net/forecast/\(GlobalConstants.privateKey)/")!
+        case .ReverseGeocoding(let lat, let lng):
+            let url =  "https://maps.googleapis.com/maps/api/geocode/json?latlng=\(lat),\(lng)&location_type=ROOFTOP&result_type=street_address&key=\(GlobalConstants.googleGeoCodingApiKey)"
+            let finalURL = url.replacingOccurrences(of: " ", with: "+")
+            return URL(string: finalURL)!
         }
     }
     
@@ -32,6 +37,8 @@ extension NetworkingService : TargetType {
             return ""
         case .CurrentWeather(let coordinate):
             return coordinate.description
+        case .ReverseGeocoding:
+            return ""
         }
     }
     
@@ -45,6 +52,8 @@ extension NetworkingService : TargetType {
             return "{'place':'\(place)'}".data(using: .utf8)!
         case .CurrentWeather(let coordinate):
             return "{'coordinate':'\(coordinate)'}".data(using: .utf8)!
+        case .ReverseGeocoding(let lat, let lng):
+            return "{'lat':'\(lat),'lng':'\(lng)''}".data(using: .utf8)!
         }
     }
     
@@ -58,10 +67,4 @@ extension NetworkingService : TargetType {
     
 
     
-}
-
-class CompleteUrlLoggerPlugin : PluginType {
-    func willSend(_ request: RequestType, target: TargetType) {
-        print(request.request?.url?.absoluteString ?? "Something is wrong")
-    }
 }

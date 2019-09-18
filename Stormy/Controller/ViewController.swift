@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Stormy
 //
-//  Created by Pasan Premaratne on 5/8/18.
+//  Created by Smithers on 18/8/19.
 //  Copyright © 2018 Treehouse. All rights reserved.
 //
 
@@ -36,20 +36,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.startUpdatingLocation()
         manager.requestLocation()
-        print(manager.location?.coordinate)
-        
-//        print(manager.location?.coordinate.latitude)
-//
-//        guard let currLat = manager.location?.coordinate.latitude else {
-//            print("Can't convert")
-//            return
-//        }
-//        print(currLat)
-       
         activityIndicator.isHidden = true
-//
-//        getWeather(coords: Cordinate(latitude: manager.location?.coordinate.latitude, longitude: manager.location?.coordinate.longitude))
-        
         getWeather(coords: Cordinate.alcatrazIsland)
     }
     
@@ -77,11 +64,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     fileprivate func displayWeather(using viewModel: CurrentWeatherViewModel){
         currentTemperatureLabel.text = viewModel.temperature
         currentHumidityLabel.text = viewModel.humidity
-        currentPrecipitationLabel.text = viewModel.precipitationProbability
+        currentPrecipitationLabel.text = "\(viewModel.precipitationProbability)%"
         currentWeatherIcon.image = viewModel.icon
         currentSummaryLabel.text = viewModel.summary
     }
-
+    
+    fileprivate func getLocation(with lat: Double, with lng: Double){
+        
+        networkingProvider.request(.ReverseGeocoding(lat: lat, lng: lng)) { (result) in
+            switch result{
+            case .success(let response):
+                do{
+                    let currentLocation = try JSONDecoder().decode(Results.self, from: response.data)
+                    currentLocation.results.forEach({ x in
+                        self.locationLabel.text = x.formatted_address
+                    })
+                    print(currentLocation)
+                }catch let error {
+                    print(error)
+                }
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
+        
+    }
+    
     @IBAction func getCurrentWeather() {
         getWeather(coords: Cordinate.alcatrazIsland)
     }
@@ -100,8 +110,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("the current location is \(locations)")
-        
+        locations.forEach { location in
+            getLocation(with: location.coordinate.latitude, with: location.coordinate.longitude)
+            getWeather(coords: Cordinate(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -124,15 +136,3 @@ extension ViewController: PlaceSelectionDelegate{
         getWeather(coords: cords)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
