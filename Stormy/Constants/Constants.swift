@@ -11,4 +11,5 @@ import Foundation
 struct GlobalConstants {
     static let googleGeoCodingApiKey = "AIzaSyCdb9UPkO5fX0l4WZrKqfw5OVlQmZ0cCcw"
     static let privateKey = "a68b537824d2345180201e3902397d6a"
+    static let defaults = UserDefaults.standard
 }

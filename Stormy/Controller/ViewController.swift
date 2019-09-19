@@ -62,7 +62,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     }
     
     fileprivate func displayWeather(using viewModel: CurrentWeatherViewModel){
-        currentTemperatureLabel.text = viewModel.temperature
+        currentTemperatureLabel.text = "\(viewModel.temperature)°F"
         currentHumidityLabel.text = viewModel.humidity
         currentPrecipitationLabel.text = "\(viewModel.precipitationProbability)%"
         currentWeatherIcon.image = viewModel.icon
@@ -70,7 +70,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     }
     
     fileprivate func getLocation(with lat: Double, with lng: Double){
-        
         networkingProvider.request(.ReverseGeocoding(lat: lat, lng: lng)) { (result) in
             switch result{
             case .success(let response):
@@ -88,8 +87,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
                 print(error)
             }
         }
-        
-        
     }
     
     @IBAction func getCurrentWeather() {
@@ -118,7 +115,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate{
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("The device failed to get the user's location \(error.localizedDescription)")
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

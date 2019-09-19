@@ -27,14 +27,20 @@ class SearchViewController: UIViewController {
     var sexyResults = [Results]()
     
     @IBAction func suggestionOneButton(_ sender: Any) {
-        getGeocoding(of: "Najjera")
+        guard placeArray.isEmpty else {
+            getGeocoding(of: placeArray.first!)
+            return
+        }
     }
     
     @IBAction func suggestionTwoButton(_ sender: Any) {
-        getGeocoding(of: "Kisaasi")
+        guard placeArray.isEmpty else {
+            getGeocoding(of: placeArray.last!)
+            return
+        }
     }
     
-    @IBAction func suggestionThreeButton(_ sender: Any) {
+    @IBAction func suggestionThreeButton(_ sender: UIButton) {
         getGeocoding(of: "Makerere")
     }
     
@@ -43,10 +49,13 @@ class SearchViewController: UIViewController {
     }
     override func viewDidLoad() {
         searchResultsTableView.isHidden = true
+        guard placeArray.isEmpty else {
+          
+            return
+        }
     }
     
     fileprivate func getGeocoding(of place: String){
-        
         networkingProvider.request(.Geocoding(place: place)) { (result) in
             switch result {
             case .success(let response):
@@ -65,7 +74,6 @@ class SearchViewController: UIViewController {
                 print(error)
             }
         }
-        
     }
 }
 
